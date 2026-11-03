@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VoltVision AI | Portal Login & Smart Connection</title>
+  <meta name="description"
+    content="Sign in to VoltVision AI consumer portal to monitor electricity consumption, forecast monthly utility bills, and optimize energy efficiency.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dark-theme">
+  <!-- Ambient Glow Orbs -->
+  <div class="bg-glow orb-1"></div>
+  <div class="bg-glow orb-2"></div>
+  <div class="bg-glow orb-3"></div>
+
+  <!-- Top Header Navigation -->
+  <header class="login-header-bar">
+    <a href="index.html" class="brand-badge" style="text-decoration: none;">
+      <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="url(#boltGradLogin)" stroke="none"></polygon>
+        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        <defs>
+          <linearGradient id="boltGradLogin" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00f2fe" />
+            <stop offset="100%" stop-color="#3b82f6" />
+          </linearGradient>
+        </defs>
+      </svg>
+      <span>VoltVision AI</span>
+    </a>
+
+    <div class="login-header-right">
+      <div class="grid-status-pill">
+        <span class="live-pulse-dot"></span>
+        <span>DISCOM Grid API: Connected</span>
+      </div>
+      <a href="index.html" class="btn btn-secondary btn-sm">
+        <span>Direct Dashboard Preview</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Login View Container -->
+  <main class="auth-wrapper" style="min-height: calc(100vh - 80px); padding-top: 10px;">
+    <div class="auth-container">
+      <!-- Left Column: Branding, Highlights, Stats -->
+      <div class="auth-brand">
+        <div class="pill pill-cyan" style="width: fit-content;">
+          <span>⚡ Next-Gen Electricity Intelligence</span>
+        </div>
+        <h1 class="auth-heading">Predict & Optimize Your Electricity</h1>
+        <p class="auth-subtext">
+          Access your real-time AI power forecasting dashboard. Model appliance energy loads, simulate peak-hour savings, and slash utility bills by up to 32%.
+        </p>
+
+        <div class="auth-highlights">
+          <div class="highlight-item">
+            <span class="highlight-icon">🤖</span>
+            <div>
+              <strong>Multi-Parameter AI Engine</strong>
+              <p>Predicts monthly kWh based on BHK size, weather, and appliance efficiency</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon">📊</span>
+            <div>
+              <strong>Automated Tariff Breakdown</strong>
+              <p>Precise calculation across slab tiers, fixed charges, and solar net-metering</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon">🌱</span>
+            <div>
+              <strong>Carbon Footprint Tracker</strong>
+              <p>Monitor emissions, grid dependency, and green solar energy generation</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Pill -->
+        <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 0.8rem; color: var(--text-subtle);">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <span>256-Bit Encrypted Smart Meter Data Transmission</span>
+        </div>
+      </div>
+
+      <!-- Right Column: Glassmorphic Auth Card -->
+      <div class="auth-card glass-panel login-auth-card">
+        <!-- Active Session Prompt (if user already logged in) -->
+        <div id="active-session-box" class="active-session-banner hidden">
+          <div class="active-session-info">
+            <div class="active-session-avatar" id="active-user-avatar">AS</div>
+            <div>
+              <div style="font-weight: 600; color: #fff;" id="active-user-name">Aman Sharma</div>
+              <div style="font-size: 0.75rem; color: var(--primary-cyan);" id="active-user-cid">CA-984210</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <a href="index.html" class="btn btn-primary btn-sm">Enter Dashboard →</a>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="clearExistingSession()">Switch</button>
+          </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="auth-tabs">
+          <button type="button" id="tab-login" class="tab-btn active" onclick="switchLoginTab('login')">
+            <span>Sign In</span>
+          </button>
+          <button type="button" id="tab-register" class="tab-btn" onclick="switchLoginTab('register')">
+            <span>Register Meter</span>
+          </button>
+        </div>
+
+        <!-- ================= 1. SIGN IN FORM ================= -->
+        <form id="login-form" class="auth-form active" onsubmit="executeLogin(event)">
+          <div class="form-header">
+            <h3>Electricity Consumer Portal</h3>
+            <p class="auth-sub-desc">Sign in with your DISCOM CA Number or registered email</p>
+          </div>
+
+          <!-- Discom Provider Selector -->
+          <div class="input-group">
+            <label for="login-provider">DISCOM Electricity Provider</label>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+              <select id="login-provider" style="appearance: none; -webkit-appearance: none; cursor: pointer;">
+                <option value="BSES Rajdhani Power Ltd (BRPL)">BSES Rajdhani Power Ltd (BRPL)</option>
+                <option value="Tata Power DDL">Tata Power DDL (TPDDL)</option>
+                <option value="Adani Electricity Mumbai">Adani Electricity Mumbai Ltd</option>
+                <option value="BESCOM Bengaluru">BESCOM (Bengaluru Electricity)</option>
+                <option value="MSEDCL Maharashtra">MSEDCL (Mahavitaran)</option>
+                <option value="UPPCL Uttar Pradesh">UPPCL (Uttar Pradesh Power)</option>
+                <option value="National Smart Grid">National Smart Grid / Other DISCOM</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Consumer ID Input -->
+          <div class="input-group">
+            <label for="login-consumer-id">Consumer / CA Number or Email</label>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="login-consumer-id" placeholder="e.g. CA-984210 or user@example.com"
+                value="CA-984210" required autocomplete="username">
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div class="input-group">
+            <div class="label-row">
+              <label for="login-password">Password</label>
+              <a href="javascript:void(0)" class="forgot-link" onclick="openForgotModal()">Forgot Password?</a>
+            </div>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="login-password" placeholder="••••••••" value="password123" required
+                autocomplete="current-password">
+              <button type="button" class="eye-btn" onclick="togglePasswordVisibility('login-password')">👁️</button>
+            </div>
+          </div>
+
+          <!-- Form Options -->
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="remember-me" checked>
+              <span>Keep me signed in</span>
+            </label>
+            <span class="badge-pill">Auto-Sync Enabled</span>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="btn-login-submit" class="btn btn-primary btn-block" style="padding: 12px 20px;">
+            <span>Sign In to Dashboard</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+
+          <!-- 1-Click Instant Demo Personas -->
+          <div class="auth-divider">
+            <span>OR 1-CLICK INSTANT DEMO PERSONAS</span>
+          </div>
+
+          <div class="demo-personas-section">
+            <div class="demo-section-title">
+              <span>⚡ Fast-Track Testing Profiles:</span>
+            </div>
+            <div class="demo-personas-grid">
+              <button type="button" class="persona-btn" onclick="quickLoginPersona('residential')">
+                <span class="p-icon">🏠</span>
+                <span class="p-title">Residential</span>
+                <span class="p-detail">3-BHK • 4 People</span>
+                <span class="p-badge">CA-984210</span>
+              </button>
+
+              <button type="button" class="persona-btn" onclick="quickLoginPersona('commercial')">
+                <span class="p-icon">🏢</span>
+                <span class="p-title">Commercial</span>
+                <span class="p-detail">Office • 18 kW Load</span>
+                <span class="p-badge">CA-440192</span>
+              </button>
+
+              <button type="button" class="persona-btn" onclick="quickLoginPersona('solar')">
+                <span class="p-icon">☀️</span>
+                <span class="p-title">Prosumer</span>
+                <span class="p-detail">3 kW Solar Array</span>
+                <span class="p-badge">CA-771203</span>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- ================= 2. REGISTRATION FORM ================= -->
+        <form id="register-form" class="auth-form" onsubmit="executeRegister(event)">
+          <div class="form-header">
+            <h3>Register New Smart Meter</h3>
+            <p class="auth-sub-desc">Link your DISCOM connection for AI predictive analytics</p>
+          </div>
+
+          <div class="form-row-2">
+            <div class="input-group">
+              <label for="reg-name">Consumer Name</label>
+              <div class="input-field">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <input type="text" id="reg-name" placeholder="Aman Sharma" required>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="reg-consumer-id">CA / Consumer No.</label>
+              <div class="input-field">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                  <path d="M7 15h10M7 9h6"></path>
+                </svg>
+                <input type="text" id="reg-consumer-id" placeholder="e.g. CA-10928374" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row-2">
+            <div class="input-group">
+              <label for="reg-email">Email Address</label>
+              <div class="input-field">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                  <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+                <input type="email" id="reg-email" placeholder="aman@example.com" required>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="reg-load">Sanctioned Load (kW)</label>
+              <div class="input-field">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+                <input type="number" id="reg-load" placeholder="5.0" min="1" max="100" step="0.5" value="5.0" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="reg-category">Connection Tariff Category</label>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              </svg>
+              <select id="reg-category" style="cursor: pointer;">
+                <option value="Domestic / Residential (LT-1)">Domestic / Residential (LT-1 Slab Tariff)</option>
+                <option value="Commercial / Business (LT-2)">Commercial / Business (LT-2 Demand Tariff)</option>
+                <option value="Industrial / SME">Industrial / SME (High-Tension Supply)</option>
+                <option value="Solar Net-Metering Prosumer">Solar Net-Metering Prosumer</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="reg-password">Create Account Password</label>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="reg-password" placeholder="At least 6 characters" minlength="6"
+                oninput="updatePasswordStrength(this.value)" required>
+              <button type="button" class="eye-btn" onclick="togglePasswordVisibility('reg-password')">👁️</button>
+            </div>
+            <!-- Visual Password Strength Meter -->
+            <div class="pw-strength-box">
+              <div class="pw-bars">
+                <div class="pw-bar-segment" id="pw-seg-1"></div>
+                <div class="pw-bar-segment" id="pw-seg-2"></div>
+                <div class="pw-bar-segment" id="pw-seg-3"></div>
+              </div>
+              <div class="pw-label-text">
+                <span>Strength: <strong id="pw-strength-text" style="color: var(--text-muted)">Too short</strong></span>
+                <span>Requires letters & numbers</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="reg-consent" required checked>
+              <span style="font-size: 0.8rem;">Authorize automated smart meter hourly telemetry reading</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" style="padding: 12px 20px;">
+            <span>Complete Registration & Open Dashboard</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= FORGOT PASSWORD MODAL ================= -->
+  <div id="forgot-modal" class="modal-backdrop" onclick="handleBackdropClick(event)">
+    <div class="modal-window">
+      <button type="button" class="modal-close-btn" onclick="closeForgotModal()" title="Close">✕</button>
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 2.2rem; margin-bottom: 6px;">🔐</div>
+        <h3 style="font-size: 1.35rem; color: #fff;">Reset Consumer Password</h3>
+        <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">
+          Enter your Consumer CA Number or registered email to receive an instant verification OTP.
+        </p>
+      </div>
+
+      <div id="forgot-step-1">
+        <div class="input-group" style="margin-bottom: 16px;">
+          <label for="reset-ident">Consumer CA Number or Email</label>
+          <div class="input-field">
+            <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+            </svg>
+            <input type="text" id="reset-ident" placeholder="e.g. CA-984210 or user@example.com" value="CA-984210">
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-block" onclick="sendResetOtp()">
+          <span>Send Verification OTP</span>
+        </button>
+      </div>
+
+      <div id="forgot-step-2" class="hidden">
+        <div class="pill pill-good" style="margin-bottom: 14px; width: 100%; justify-content: center;">
+          <span>✓ Demo OTP: <strong>123456</strong> sent to registered mobile</span>
+        </div>
+        <div class="input-group" style="margin-bottom: 14px;">
+          <label for="reset-otp">6-Digit Verification Code</label>
+          <div class="input-field">
+            <input type="text" id="reset-otp" placeholder="123456" maxlength="6"
+              style="text-align: center; font-size: 1.2rem; letter-spacing: 0.2em;" value="123456">
+          </div>
+        </div>
+        <div class="input-group" style="margin-bottom: 16px;">
+          <label for="reset-new-pw">New Password</label>
+          <div class="input-field">
+            <input type="password" id="reset-new-pw" placeholder="Enter new password" value="newpassword123">
+          </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-block" onclick="completePasswordReset()">
+          <span>Update Password & Sign In</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Client-Side Auth Controller Script -->
+  <script>
+    // Check if user is already logged in on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      checkExistingSession();
+    });
+
+    function checkExistingSession() {
+      const stored = localStorage.getItem('voltvision_user');
+      const sessionBox = document.getElementById('active-session-box');
+      if (stored) {
+        try {
+          const user = JSON.parse(stored);
+          if (user && user.name) {
+            document.getElementById('active-user-name').textContent = user.name;
+            document.getElementById('active-user-cid').textContent = user.consumerId || 'CA-CONNECTED';
+            const initials = user.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'VV';
+            document.getElementById('active-user-avatar').textContent = initials;
+            sessionBox.classList.remove('hidden');
+          }
+        } catch (e) {
+          sessionBox.classList.add('hidden');
+        }
+      } else {
+        sessionBox.classList.add('hidden');
+      }
+    }
+
+    const API_BASE_URL = (window.location.protocol.startsWith('http') && (window.location.port === '8000' || window.location.port === ''))
+      ? window.location.origin
+      : 'http://127.0.0.1:8000';
+
+    function clearExistingSession() {
+      localStorage.removeItem('voltvision_user');
+      localStorage.removeItem('voltvision_saved_prediction');
+      document.getElementById('active-session-box').classList.add('hidden');
+      showToast('Session cleared. Please sign in with your credentials.');
+    }
+
+    function switchLoginTab(tab) {
+      document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+      document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+      document.getElementById('login-form').classList.toggle('active', tab === 'login');
+      document.getElementById('register-form').classList.toggle('active', tab === 'register');
+    }
+
+    function togglePasswordVisibility(id) {
+      const input = document.getElementById(id);
+      if (input) {
+        input.type = input.type === 'password' ? 'text' : 'password';
+      }
+    }
+
+    async function executeLogin(e) {
+      e.preventDefault();
+      const consumerId = document.getElementById('login-consumer-id').value.trim();
+      const password = document.getElementById('login-password').value;
+      const provider = document.getElementById('login-provider').value;
+
+      if (!consumerId || !password) {
+        showToast('⚠️ Please enter your Consumer ID and password');
+        return;
+      }
+
+      const submitBtn = document.getElementById('btn-login-submit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>Authenticating with DISCOM...</span>';
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ identifier: consumerId, password: password })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          const userObj = {
+            ...data.user,
+            provider: provider || data.user.provider,
+            hasPrediction: Boolean(data.prediction),
+            isNewUser: !data.prediction
+          };
+          if (data.prediction) {
+            localStorage.setItem('voltvision_saved_prediction', JSON.stringify(data.prediction));
+          } else {
+            localStorage.removeItem('voltvision_saved_prediction');
+          }
+          finishLogin(userObj, '⚡ Welcome back, ' + data.user.name + '!');
+          return;
+        } else {
+          const errData = await res.json().catch(() => ({}));
+          showToast('⚠️ ' + (errData.detail || 'Invalid login credentials'));
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Sign In to Dashboard</span>';
+          return;
+        }
+      } catch (_) {
+        // Fallback for offline mode
+        const isDemo = consumerId.toUpperCase() === 'CA-984210';
+        const user = {
+          name: consumerId.includes('@') ? consumerId.split('@')[0] : (isDemo ? 'Aman Sharma' : 'Consumer ' + consumerId),
+          consumerId: consumerId.toUpperCase(),
+          sanctionedLoad: 5.0,
+          provider: provider,
+          hasPrediction: isDemo,
+          isNewUser: !isDemo,
+          connectionDate: '2023-03-12'
+        };
+        finishLogin(user, '⚡ Login Successful!');
+      }
+    }
+
+    function quickLoginPersona(type) {
+      let user;
+      if (type === 'residential') {
+        user = {
+          name: 'Aman Sharma',
+          consumerId: 'CA-984210',
+          sanctionedLoad: 5.0,
+          provider: 'BSES Rajdhani Power Ltd',
+          category: 'Residential',
+          hasPrediction: true,
+          isNewUser: false,
+          bhk: 3,
+          occupants: 4,
+          solarKw: 1.5
+        };
+      } else if (type === 'commercial') {
+        user = {
+          name: 'Tech Hub Labs (HQ)',
+          consumerId: 'CA-440192',
+          sanctionedLoad: 18.0,
+          provider: 'Tata Power DDL',
+          category: 'Commercial',
+          hasPrediction: true,
+          isNewUser: false,
+          bhk: 4,
+          occupants: 15,
+          solarKw: 0
+        };
+      } else if (type === 'solar') {
+        user = {
+          name: 'Green Villa Eco-Resort',
+          consumerId: 'CA-771203',
+          sanctionedLoad: 7.5,
+          provider: 'Adani Electricity Mumbai',
+          category: 'Solar Prosumer',
+          hasPrediction: true,
+          isNewUser: false,
+          bhk: 4,
+          occupants: 5,
+          solarKw: 5.0
+        };
+      }
+
+      showToast('⚡ Accessing as ' + user.name + ' (' + user.category + ')...');
+      setTimeout(() => {
+        finishLogin(user, 'Welcome, ' + user.name + '! Loading live prediction models...');
+      }, 400);
+    }
+
+    async function executeRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const consumerId = document.getElementById('reg-consumer-id').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const load = parseFloat(document.getElementById('reg-load').value) || 5.0;
+      const category = document.getElementById('reg-category').value;
+      const password = document.getElementById('reg-password').value;
+
+      if (!name || !consumerId || !email || !password) {
+        showToast('⚠️ Please fill out all required fields');
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name,
+            consumer_id: consumerId.toUpperCase(),
+            email: email,
+            password: password,
+            sanctioned_load: load,
+            category: category,
+            provider: 'National Smart Grid Connected'
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok) {
+          showToast('⚠️ ' + (data.detail || 'Registration failed'));
+          return;
+        }
+
+        // New user has ZERO predictions
+        localStorage.removeItem('voltvision_saved_prediction');
+        const newUser = {
+          name: data.user.name,
+          consumerId: data.user.consumerId,
+          email: data.user.email,
+          sanctionedLoad: data.user.sanctionedLoad,
+          category: data.user.category,
+          provider: data.user.provider,
+          hasPrediction: false,
+          isNewUser: true,
+          connectionDate: new Date().toISOString().split('T')[0]
+        };
+
+        showToast('🎉 Connection Registered! Synchronizing smart meter...');
+        setTimeout(() => {
+          finishLogin(newUser, 'Welcome to VoltVision, ' + name + '! Please configure your appliances.');
+        }, 500);
+      } catch (err) {
+        // Fallback for offline mode
+        localStorage.removeItem('voltvision_saved_prediction');
+        const newUser = {
+          name: name,
+          consumerId: consumerId.toUpperCase(),
+          email: email,
+          sanctionedLoad: load,
+          category: category,
+          hasPrediction: false,
+          isNewUser: true,
+          provider: 'National Smart Grid Connected',
+          connectionDate: new Date().toISOString().split('T')[0]
+        };
+
+        showToast('🎉 Connection Registered! Synchronizing smart meter...');
+        setTimeout(() => {
+          finishLogin(newUser, 'Welcome to VoltVision, ' + name + '!');
+        }, 500);
+      }
+    }
+
+    function finishLogin(user, message) {
+      localStorage.setItem('voltvision_user', JSON.stringify(user));
+      showToast(message);
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 900);
+    }
+
+    function updatePasswordStrength(val) {
+      const seg1 = document.getElementById('pw-seg-1');
+      const seg2 = document.getElementById('pw-seg-2');
+      const seg3 = document.getElementById('pw-seg-3');
+      const text = document.getElementById('pw-strength-text');
+
+      seg1.style.background = 'rgba(255, 255, 255, 0.1)';
+      seg2.style.background = 'rgba(255, 255, 255, 0.1)';
+      seg3.style.background = 'rgba(255, 255, 255, 0.1)';
+
+      if (!val || val.length < 4) {
+        text.textContent = 'Too short';
+        text.style.color = 'var(--text-muted)';
+        return;
+      }
+
+      if (val.length >= 4 && val.length < 8) {
+        seg1.style.background = 'var(--accent-rose)';
+        text.textContent = 'Weak';
+        text.style.color = 'var(--accent-rose)';
+      } else if (val.length >= 8 && !(/\d/.test(val) && /[A-Za-z]/.test(val))) {
+        seg1.style.background = 'var(--accent-amber)';
+        seg2.style.background = 'var(--accent-amber)';
+        text.textContent = 'Medium';
+        text.style.color = 'var(--accent-amber)';
+      } else if (val.length >= 8 && /\d/.test(val) && /[A-Za-z]/.test(val)) {
+        seg1.style.background = 'var(--accent-emerald)';
+        seg2.style.background = 'var(--accent-emerald)';
+        seg3.style.background = 'var(--accent-emerald)';
+        text.textContent = 'Strong (Secure)';
+        text.style.color = 'var(--accent-emerald)';
+      }
+    }
+
+    // Modal Operations
+    function openForgotModal() {
+      document.getElementById('forgot-modal').classList.add('active');
+      document.getElementById('forgot-step-1').classList.remove('hidden');
+      document.getElementById('forgot-step-2').classList.add('hidden');
+    }
+
+    function closeForgotModal() {
+      document.getElementById('forgot-modal').classList.remove('active');
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target.id === 'forgot-modal') {
+        closeForgotModal();
+      }
+    }
+
+    function sendResetOtp() {
+      const ident = document.getElementById('reset-ident').value.trim();
+      if (!ident) {
+        showToast('⚠️ Please enter your Consumer CA or Email');
+        return;
+      }
+      showToast('📩 Verification code sent! Check your SMS/Email.');
+      document.getElementById('forgot-step-1').classList.add('hidden');
+      document.getElementById('forgot-step-2').classList.remove('hidden');
+    }
+
+    function completePasswordReset() {
+      const otp = document.getElementById('reset-otp').value.trim();
+      const newPw = document.getElementById('reset-new-pw').value;
+      if (otp !== '123456') {
+        showToast('⚠️ Invalid OTP. For testing, use OTP: 123456');
+        return;
+      }
+      if (!newPw || newPw.length < 6) {
+        showToast('⚠️ Password must be at least 6 characters');
+        return;
+      }
+      showToast('✅ Password reset successfully! Logging you in...');
+      setTimeout(() => {
+        closeForgotModal();
+        const demoUser = {
+          name: 'Aman Sharma',
+          consumerId: 'CA-984210',
+          sanctionedLoad: 5.0,
+          connectionDate: '2023-01-15'
+        };
+        finishLogin(demoUser, 'Password updated. Welcome back!');
+      }, 700);
+    }
+
+    // Toast Utility
+    function showToast(message) {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = '<span>' + message + '</span>';
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100%)';
+        setTimeout(() => toast.remove(), 400);
+      }, 3500);
+    }
+  </script>
+</body>
+
+</html>

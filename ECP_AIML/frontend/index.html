@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VoltVision AI | Smart Electricity Consumption Prediction & Analytics</title>
+  <meta name="description"
+    content="AI-powered electricity consumption prediction, bill forecasting, and smart energy optimization dashboard.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="dark-theme">
+  <!-- Background Glow Orbs -->
+  <div class="bg-glow orb-1"></div>
+  <div class="bg-glow orb-2"></div>
+  <div class="bg-glow orb-3"></div>
+
+  <!-- ================= AUTHENTICATION / LOGIN VIEW ================= -->
+  <section id="auth-view" class="auth-wrapper">
+    <div class="auth-container">
+      <div class="auth-brand">
+        <div class="brand-badge">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="url(#boltGrad)" stroke="none"></polygon>
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            <defs>
+              <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00f2fe" />
+                <stop offset="100%" stop-color="#4facfe" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>VoltVision AI</span>
+        </div>
+        <h1 class="auth-heading">Smart Energy Forecasting</h1>
+        <p class="auth-subtext">Predict power consumption, slash your utility bills, and monitor energy efficiency with
+          cutting-edge ML models.</p>
+
+        <div class="auth-highlights">
+          <div class="highlight-item">
+            <span class="highlight-icon">⚡</span>
+            <div>
+              <strong>98.4% Accuracy</strong>
+              <p>Multi-parameter load forecasting</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon">💰</span>
+            <div>
+              <strong>Up to 32% Savings</strong>
+              <p>Personalized tariff optimization</p>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-icon">🌱</span>
+            <div>
+              <strong>Carbon Tracking</strong>
+              <p>Eco-impact & solar offsets</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auth Form Card -->
+      <div class="auth-card glass-panel">
+        <div class="auth-tabs">
+          <button id="tab-login" class="tab-btn active" onclick="switchAuthTab('login')">Sign In</button>
+          <button id="tab-register" class="tab-btn" onclick="switchAuthTab('register')">New Account</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="auth-form active" onsubmit="handleLogin(event)">
+          <div class="form-header">
+            <h3>Consumer Portal Login</h3>
+            <p>Enter your electricity account credentials</p>
+          </div>
+
+          <div class="input-group">
+            <label for="login-consumer-id">Consumer ID / Email</label>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="login-consumer-id" placeholder="e.g. CA-948210 or user@example.com"
+                value="CA-984210" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="label-row">
+              <label for="login-password">Password</label>
+              <a href="#" class="forgot-link"
+                onclick="demoAlert('Password reset link sent to registered phone/email!')">Forgot?</a>
+            </div>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="login-password" placeholder="••••••••" value="password123" required>
+              <button type="button" class="eye-btn" onclick="togglePassword('login-password')">👁️</button>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember-me">
+              <input type="checkbox" id="remember-me" checked>
+              <span>Keep me signed in</span>
+            </label>
+            <span class="badge-pill">DISCOM Connected</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>Sign In to Dashboard</span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+
+          <div class="auth-divider">
+            <span>OR INSTANT DEMO</span>
+          </div>
+
+          <button type="button" class="btn btn-demo btn-block" onclick="loginAsDemo()">
+            <span class="spark-icon">⚡</span>
+            <span>1-Click Quick Demo Login</span>
+          </button>
+
+          <a href="login.html" class="btn btn-secondary btn-block" style="margin-top: 10px; font-size: 0.88rem;">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+            <span>Open Dedicated Login Portal (login.html)</span>
+          </a>
+        </form>
+
+        <!-- Registration Form -->
+        <form id="register-form" class="auth-form" onsubmit="handleRegister(event)">
+          <div class="form-header">
+            <h3>Register New Connection</h3>
+            <p>Connect your smart meter for live AI predictions</p>
+          </div>
+
+          <div class="input-group">
+            <label for="reg-name">Full Name</label>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="reg-name" placeholder="Aman Sharma" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="reg-consumer-id">Consumer / CA Number</label>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M7 15h10M7 9h6"></path>
+              </svg>
+              <input type="text" id="reg-consumer-id" placeholder="e.g. CA-10293847" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="reg-email">Email Address</label>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <input type="email" id="reg-email" placeholder="name@domain.com" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="reg-password">Create Password</label>
+            <div class="input-field">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input type="password" id="reg-password" placeholder="At least 6 characters" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">
+            <span>Complete Registration</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAIN DASHBOARD APPLICATION ================= -->
+  <div id="app-view" class="app-wrapper hidden">
+    <!-- Navigation Bar -->
+    <header class="navbar glass-panel">
+      <div class="nav-left">
+        <div class="brand-badge small">
+          <svg class="brand-icon small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" fill="#00f2fe" stroke="none"></polygon>
+          </svg>
+          <span class="brand-title">VoltVision <span class="highlight-text">AI</span></span>
+        </div>
+
+        <nav class="nav-links">
+          <button class="nav-link active" onclick="switchSection('dashboard')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            Dashboard
+          </button>
+          <button class="nav-link" onclick="switchSection('predictor')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+            </svg>
+            AI Predictor
+          </button>
+          <button class="nav-link" onclick="switchSection('breakdown')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+              <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+            </svg>
+            Appliance Analytics
+          </button>
+          <button class="nav-link" onclick="switchSection('tips')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-7 7c0 2.5 1.5 4.5 3 6h8c1.5-1.5 3-3.5 3-6a7 7 0 0 0-7-7z"></path>
+            </svg>
+            Energy Saver
+          </button>
+        </nav>
+      </div>
+
+      <div class="nav-right">
+        <!-- Live Backend Status Pill -->
+        <div class="stat-badge backend-status-badge" id="backend-status-badge" title="FastAPI ML Backend Status">
+          <span class="live-dot" id="backend-status-dot"></span>
+          <span id="backend-status-text">ML Backend: Checking...</span>
+        </div>
+
+        <!-- Live Tariff Pill -->
+        <div class="stat-badge tariff-badge" title="State DISCOM Standard Tariff">
+          <span class="live-dot"></span>
+          <span class="tariff-label">Tariff:</span>
+          <strong id="header-tariff">₹7.20 / kWh</strong>
+        </div>
+
+        <!-- Currency Selector -->
+        <div class="currency-toggle">
+          <button class="curr-btn active" id="curr-inr" onclick="setCurrency('INR')">₹ INR</button>
+          <button class="curr-btn" id="curr-usd" onclick="setCurrency('USD')">$ USD</button>
+        </div>
+
+        <!-- User Menu -->
+        <div class="user-profile">
+          <div class="user-avatar" id="nav-avatar">AS</div>
+          <div class="user-info">
+            <span class="user-name" id="nav-username">Aman Sharma</span>
+            <span class="user-cid" id="nav-cid">CA-984210</span>
+          </div>
+          <button class="logout-btn" onclick="handleLogout()" title="Log out">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Container Content -->
+    <main class="main-content">
+
+      <!-- ================= SECTION 1: OVERVIEW DASHBOARD ================= -->
+      <section id="section-dashboard" class="content-section active">
+        <!-- Top Welcome Banner & Quick Alert -->
+        <div class="dash-hero glass-panel">
+          <div class="hero-text">
+            <h2>Welcome, <span id="dash-greeting-name">Consumer</span>! 👋</h2>
+            <p id="dash-hero-desc">Your projected monthly consumption is <span class="badge-warning font-mono" id="hero-pred-kwh">0 kWh</span>. Peak hours run between <strong class="glow-text">6:00 PM – 10:00 PM</strong>.</p>
+          </div>
+          <div class="hero-actions">
+            <button class="btn btn-secondary" onclick="exportReport()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Export Report
+            </button>
+            <button class="btn btn-primary" onclick="switchSection('predictor')">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+              Recalculate AI Prediction
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Key Metric Cards -->
+        <div class="kpi-grid">
+          <!-- KPI 1 -->
+          <div class="kpi-card glass-panel">
+            <div class="kpi-header">
+              <span class="kpi-title">Predicted Monthly Usage</span>
+              <div class="kpi-icon cyan">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-number" id="kpi-predicted-kwh">0</span>
+              <span class="kpi-unit">kWh</span>
+            </div>
+            <div class="kpi-footer">
+              <span class="pill pill-good" id="kpi-diff-badge">Smart Meter Synced</span>
+              <span class="kpi-subtext" id="kpi-confidence-subtext">Confidence: 98.4%</span>
+            </div>
+          </div>
+
+          <!-- KPI 2 -->
+          <div class="kpi-card glass-panel">
+            <div class="kpi-header">
+              <span class="kpi-title">Projected Electricity Bill</span>
+              <div class="kpi-icon emerald">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 6v12M17 10a5 5 0 0 0-10 0 5 5 0 0 0 10 2 5 5 0 0 1-10 0"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-currency" id="kpi-currency-symbol">₹</span>
+              <span class="kpi-number" id="kpi-projected-bill">0</span>
+            </div>
+            <div class="kpi-footer">
+              <span class="kpi-subtext">Due by: <strong>15th Next Month</strong></span>
+              <span class="pill pill-cyan">Standard Tariff</span>
+            </div>
+          </div>
+
+          <!-- KPI 3 -->
+          <div class="kpi-card glass-panel">
+            <div class="kpi-header">
+              <span class="kpi-title">Energy Efficiency Rating</span>
+              <div class="kpi-icon amber">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path
+                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                  </path>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-number grade-badge" id="kpi-efficiency-grade">--</span>
+              <span class="kpi-unit">Efficiency Rank</span>
+            </div>
+            <div class="kpi-footer">
+              <div class="progress-bar-small">
+                <div class="progress-fill" id="efficiency-progress" style="width: 0%;"></div>
+              </div>
+              <span class="kpi-subtext" id="efficiency-score-txt">0 / 100 Score</span>
+            </div>
+          </div>
+
+          <!-- KPI 4 -->
+          <div class="kpi-card glass-panel">
+            <div class="kpi-header">
+              <span class="kpi-title">Est. Carbon Footprint</span>
+              <div class="kpi-icon green">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path>
+                  <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
+                </svg>
+              </div>
+            </div>
+            <div class="kpi-value-row">
+              <span class="kpi-number" id="kpi-carbon-val">0</span>
+              <span class="kpi-unit">kg CO₂e</span>
+            </div>
+            <div class="kpi-footer">
+              <span class="pill pill-good" id="kpi-solar-offset">🌿 0 kg saved by Solar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Chart & Speedometer Gauge Grid -->
+        <div class="dash-charts-grid">
+          <!-- Daily Consumption Trend & Forecast -->
+          <div class="chart-card glass-panel main-chart">
+            <div class="card-header-flex">
+              <div>
+                <h3 class="card-title">Consumption Trend vs AI Forecast</h3>
+                <p class="card-subtitle">Loading daily consumption predictions from the ML backend…</p>
+              </div>
+              <div class="chart-legend-custom">
+                <span class="legend-item"><span class="legend-dot forecast"></span> Backend ML Forecast</span>
+              </div>
+            </div>
+            <div class="chart-container">
+              <canvas id="trendChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Real-Time Peak Load Meter -->
+          <div class="chart-card glass-panel meter-card">
+            <div class="card-header-flex">
+              <div>
+                <h3 class="card-title">Live Demand Load</h3>
+                <p class="card-subtitle">Connected Load: <strong>5.0 kW Sanctioned</strong></p>
+              </div>
+              <span class="status-indicator live">Normal</span>
+            </div>
+
+            <div class="gauge-wrapper">
+              <div class="gauge-center">
+                <span class="gauge-val" id="live-kw-val">0.0</span>
+                <span class="gauge-unit">kW Load</span>
+                <span class="gauge-safe-label" id="gauge-safe-label">0% of Sanctioned</span>
+              </div>
+              <svg class="gauge-svg" viewBox="0 0 200 120">
+                <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="16"
+                  stroke-linecap="round" />
+                <path id="gauge-fill-arc" d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="url(#gaugeGradient)"
+                  stroke-width="16" stroke-linecap="round" stroke-dasharray="251.2" stroke-dashoffset="251.2" />
+                <defs>
+                  <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#10b981" />
+                    <stop offset="60%" stop-color="#00f2fe" />
+                    <stop offset="90%" stop-color="#f59e0b" />
+                    <stop offset="100%" stop-color="#ef4444" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+
+            <div class="meter-stats-row">
+              <div class="meter-stat">
+                <span>Peak Today</span>
+                <strong id="stat-peak-today">0.0 kW</strong>
+              </div>
+              <div class="meter-stat">
+                <span>Off-Peak Avg</span>
+                <strong>0.0 kW</strong>
+              </div>
+              <div class="meter-stat">
+                <span>Power Factor</span>
+                <strong class="text-emerald">0.98 (Normal)</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secondary Row: Quick Appliance Snapshot & Hourly Tariff Alert -->
+        <div class="dash-secondary-grid">
+          <div class="glass-panel alert-box">
+            <div class="alert-icon">⚡</div>
+            <div class="alert-content">
+              <h4>High Tariff Peak Alert (6 PM – 10 PM)</h4>
+              <p>Electricity costs ₹3.50/kWh extra during peak grid hours. Shift your washing machine and water heater
+                operation to off-peak hours (10 PM – 7 AM) to save roughly <strong><span
+                    id="alert-save-amount">₹0</span>/month</strong>.</p>
+            </div>
+            <button class="btn btn-sm btn-cyan" onclick="switchSection('tips')">View Savings Guide</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION 2: SMART AI PREDICTOR ================= -->
+      <section id="section-predictor" class="content-section">
+        <div class="section-title-wrap">
+          <div>
+            <h2 class="section-title">AI Electricity Consumption Simulator</h2>
+            <p class="section-desc">Adjust your household parameters, weather conditions, and appliance usage to
+              forecast exact monthly units and electricity costs in real time.</p>
+          </div>
+          <button class="btn btn-secondary" onclick="resetToDefaults()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+              <path d="M3 3v5h5"></path>
+            </svg>
+            Reset Preset
+          </button>
+        </div>
+
+        <div class="predictor-layout">
+          <!-- Input Form Panel -->
+          <div class="calculator-inputs glass-panel">
+            <h3 class="panel-subtitle">1. Property & Environment Parameters</h3>
+
+            <div class="form-row-2">
+              <div class="input-control">
+                <label>Property Type</label>
+                <select id="param-bhk" onchange="runPrediction()">
+                  <option value="1">1 BHK Apartment (550 sq.ft)</option>
+                  <option value="2">2 BHK Apartment (950 sq.ft)</option>
+                  <option value="3" selected>3 BHK Apartment / House (1500 sq.ft)</option>
+                  <option value="4">4 BHK / Independent Villa (2400 sq.ft)</option>
+                  <option value="5">Small Commercial / Studio (1200 sq.ft)</option>
+                </select>
+              </div>
+
+              <div class="input-control">
+                <label>Number of Occupants (<span id="val-occupants">4</span> People)</label>
+                <input type="range" id="param-occupants" min="1" max="10" value="4"
+                  oninput="updateSliderVal('occupants'); runPrediction();">
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="input-control">
+                <label>Season / Weather</label>
+                <select id="param-season" onchange="runPrediction()">
+                  <option value="summer" selected>☀️ Peak Summer (35°C – 42°C)</option>
+                  <option value="monsoon">🌧️ Monsoon / Humid (28°C – 32°C)</option>
+                  <option value="winter">❄️ Winter / Mild (16°C – 24°C)</option>
+                </select>
+              </div>
+
+              <div class="input-control">
+                <label>Avg Daily Temp (<span id="val-temp">36</span>°C)</label>
+                <input type="range" id="param-temp" min="15" max="46" value="36"
+                  oninput="updateSliderVal('temp'); runPrediction();">
+              </div>
+            </div>
+
+            <div class="divider-line"></div>
+
+            <div class="appliance-manager-bar">
+              <div>
+                <h3 class="panel-subtitle" style="margin: 0;">2. Appliance Selection & Operating Hours</h3>
+                <p style="font-size: 0.8rem; color: var(--text-muted); margin: 2px 0 0;">Toggle switches on/off to include only the appliances you actually own</p>
+              </div>
+              <div class="appliance-quick-actions">
+                <button type="button" class="btn-quick-pill" onclick="toggleAllAppliances(true)">✓ Enable All</button>
+                <button type="button" class="btn-quick-pill" onclick="toggleAllAppliances(false)">✕ Disable All</button>
+                <button type="button" class="btn-quick-pill" onclick="resetToDefaults()">🔄 Standard 3-BHK</button>
+              </div>
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div class="appliance-filter-pills" style="margin-bottom: 16px;">
+              <button type="button" class="filter-pill-btn active" onclick="filterApplianceCategory('all', this)">All (12)</button>
+              <button type="button" class="filter-pill-btn" onclick="filterApplianceCategory('cooling', this)">❄️ Cooling & Fans</button>
+              <button type="button" class="filter-pill-btn" onclick="filterApplianceCategory('pumps', this)">🚰 Pumps & Heating</button>
+              <button type="button" class="filter-pill-btn" onclick="filterApplianceCategory('kitchen', this)">🧊 Kitchen & Laundry</button>
+              <button type="button" class="filter-pill-btn" onclick="filterApplianceCategory('lighting', this)">💡 Lighting & TV</button>
+              <button type="button" class="filter-pill-btn" onclick="filterApplianceCategory('solar', this)">☀️ Green Tech</button>
+            </div>
+
+            <!-- Appliance 1: Air Conditioners -->
+            <div class="appliance-input-card" id="card-ac" data-category="cooling">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">❄️</span>
+                  <div>
+                    <strong>Air Conditioners (1.5 Ton Split)</strong>
+                    <p>Heavy cooling compressor load</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-ac">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-ac" checked onchange="toggleAppliance('ac')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-ac">
+                <div class="control-item">
+                  <label>Units: <strong id="val-ac-units">2</strong></label>
+                  <input type="range" id="param-ac-units" min="0" max="6" value="2"
+                    oninput="updateSliderVal('ac-units'); runPrediction();">
+                </div>
+                <div class="control-item">
+                  <label>Usage: <strong id="val-ac-hours">8</strong> hrs/day</label>
+                  <input type="range" id="param-ac-hours" min="0" max="24" value="8"
+                    oninput="updateSliderVal('ac-hours'); runPrediction();">
+                </div>
+                <div class="control-item">
+                  <label>Efficiency Rating</label>
+                  <select id="param-ac-star" onchange="runPrediction()">
+                    <option value="3">3-Star Inverter AC</option>
+                    <option value="5" selected>5-Star Super Saver Inverter</option>
+                    <option value="1">Non-Inverter / 1-Star</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 2: Roof / Ceiling Fans -->
+            <div class="appliance-input-card" id="card-ceiling-fan" data-category="cooling">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">🌀</span>
+                  <div>
+                    <strong>Roof / Ceiling Fans</strong>
+                    <p>Continuous room circulation & ventilation</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-ceiling-fan">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-ceiling-fan" checked onchange="toggleAppliance('ceiling-fan')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-ceiling-fan">
+                <div class="control-item">
+                  <label>Ceiling Fans: <strong id="val-ceiling-fan-units">3</strong> Units</label>
+                  <input type="range" id="param-ceiling-fan-units" min="0" max="10" value="3"
+                    oninput="updateSliderVal('ceiling-fan-units'); runPrediction();">
+                </div>
+                <div class="control-item">
+                  <label>Usage: <strong id="val-ceiling-fan-hours">10</strong> hrs/day</label>
+                  <input type="range" id="param-ceiling-fan-hours" min="0" max="24" value="10"
+                    oninput="updateSliderVal('ceiling-fan-hours'); runPrediction();">
+                </div>
+                <div class="control-item">
+                  <label>Motor Technology</label>
+                  <select id="param-ceiling-fan-type" onchange="runPrediction()">
+                    <option value="standard" selected>Standard Induction Motor (75W)</option>
+                    <option value="bldc">5-Star BLDC Motor (32W - Eco Saver)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 3: Table / Stand Fans -->
+            <div class="appliance-input-card" id="card-table-fan" data-category="cooling">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">💨</span>
+                  <div>
+                    <strong>Table / Stand Fans (50W)</strong>
+                    <p>Portable desk & pedestal cooling fans</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-off" id="badge-table-fan">Not Owned</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-table-fan" onchange="toggleAppliance('table-fan')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-table-fan">
+                <div class="control-item">
+                  <label>Table Fans: <strong id="val-table-fan-units">1</strong> Unit</label>
+                  <input type="range" id="param-table-fan-units" min="0" max="6" value="1"
+                    oninput="updateSliderVal('table-fan-units'); runPrediction();">
+                </div>
+                <div class="control-item">
+                  <label>Daily Runtime: <strong id="val-table-fan-hours">6</strong> hrs/day</label>
+                  <input type="range" id="param-table-fan-hours" min="0" max="24" value="6"
+                    oninput="updateSliderVal('table-fan-hours'); runPrediction();">
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 4: Water Pump & Motor with Timing -->
+            <div class="appliance-input-card highlight-card" id="card-water-pump" data-category="pumps">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">🚰</span>
+                  <div>
+                    <strong>Water Pump (Submersible / Monoblock)</strong>
+                    <p>Overhead tank filling & domestic water motor</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-water-pump">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-water-pump" checked onchange="toggleAppliance('water-pump')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-water-pump">
+                <div class="control-item">
+                  <label>Motor Horsepower (HP)</label>
+                  <select id="param-water-pump-hp" onchange="runPrediction()">
+                    <option value="0.5">0.5 HP (375W - Small Booster)</option>
+                    <option value="1.0" selected>1.0 HP (750W - Standard Domestic)</option>
+                    <option value="1.5">1.5 HP (1120W - Deep Submersible)</option>
+                    <option value="2.0">2.0 HP (1500W - Heavy Agricultural)</option>
+                  </select>
+                </div>
+                <div class="control-item">
+                  <label>Run Duration: <strong id="val-water-pump-hours">1.0</strong> hrs/day</label>
+                  <input type="range" id="param-water-pump-hours" min="0" max="5" step="0.5" value="1.0"
+                    oninput="updateSliderVal('water-pump-hours'); runPrediction();">
+                </div>
+                <div class="control-item">
+                  <label>Operating Timing Slot</label>
+                  <select id="param-water-pump-timing" onchange="runPrediction()">
+                    <option value="morning" selected>🌅 Morning Slot (6 AM – 8 AM) [Peak]</option>
+                    <option value="afternoon">☀️ Afternoon Slot (12 PM – 2 PM) [Solar Off-Peak]</option>
+                    <option value="evening">🌆 Evening Slot (5 PM – 7 PM) [Peak]</option>
+                    <option value="night">🌙 Night Slot (10 PM – 6 AM) [Off-Peak Green Tariff]</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 5: Water Geysers -->
+            <div class="appliance-input-card" id="card-geyser" data-category="pumps">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">🚿</span>
+                  <div>
+                    <strong>Water Geysers / Boilers</strong>
+                    <p>2000W heating element</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-geyser">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-geyser" checked onchange="toggleAppliance('geyser')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-geyser">
+                <div class="control-item">
+                  <label>Heater Units: <strong id="val-geyser-units">2</strong></label>
+                  <input type="range" id="param-geyser-units" min="0" max="4" value="2"
+                    oninput="updateSliderVal('geyser-units'); runPrediction();">
+                </div>
+                <div class="control-item">
+                  <label>Daily Usage: <strong id="val-geyser-hours">1.5</strong> hrs/day</label>
+                  <input type="range" id="param-geyser-hours" min="0" max="6" step="0.5" value="1.5"
+                    oninput="updateSliderVal('geyser-hours'); runPrediction();">
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 6: Refrigerator -->
+            <div class="appliance-input-card" id="card-fridge" data-category="kitchen">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">🧊</span>
+                  <div>
+                    <strong>Refrigerator (24x7 Continuous)</strong>
+                    <p>Compressor cycle duty</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-fridge">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-fridge" checked onchange="toggleAppliance('fridge')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-fridge">
+                <div class="control-item">
+                  <label>Refrigerator Type</label>
+                  <select id="param-fridge" onchange="runPrediction()">
+                    <option value="5star-double">Double Door Inverter (5-Star - 26 kWh/mo)</option>
+                    <option value="3star-double" selected>Double Door Standard (3-Star - 38 kWh/mo)</option>
+                    <option value="side-by-side">Large French / Side-by-Side (62 kWh/mo)</option>
+                    <option value="single">Single Door Basic (22 kWh/mo)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 7: Mixture Machine / Grinder -->
+            <div class="appliance-input-card" id="card-mixer" data-category="kitchen">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">🌪️</span>
+                  <div>
+                    <strong>Mixture Machine (Mixer Grinder)</strong>
+                    <p>Kitchen food processor & spice grinder (600W)</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-mixer">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-mixer" checked onchange="toggleAppliance('mixer')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-mixer">
+                <div class="control-item">
+                  <label>Daily Usage: <strong id="val-mixer-minutes">20</strong> mins/day</label>
+                  <input type="range" id="param-mixer-minutes" min="0" max="60" step="5" value="20"
+                    oninput="updateSliderVal('mixer-minutes'); runPrediction();">
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 8: LED Bulbs & Smart Lighting -->
+            <div class="appliance-input-card" id="card-led-bulbs" data-category="lighting">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">💡</span>
+                  <div>
+                    <strong>LED Bulbs & Smart Lighting</strong>
+                    <p>10W energy saver home illumination</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-led-bulbs">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-led-bulbs" checked onchange="toggleAppliance('led-bulbs')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-led-bulbs">
+                <div class="control-item">
+                  <label>Total LED Bulbs: <strong id="val-led-bulbs-units">8</strong> Bulbs</label>
+                  <input type="range" id="param-led-bulbs-units" min="0" max="40" value="8"
+                    oninput="updateSliderVal('led-bulbs-units'); runPrediction();">
+                </div>
+                <div class="control-item">
+                  <label>Average Daily Hours: <strong id="val-led-bulbs-hours">6</strong> hrs/day</label>
+                  <input type="range" id="param-led-bulbs-hours" min="0" max="24" value="6"
+                    oninput="updateSliderVal('led-bulbs-hours'); runPrediction();">
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 9: Smart LED TV & Entertainment -->
+            <div class="appliance-input-card" id="card-tv" data-category="lighting">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">📺</span>
+                  <div>
+                    <strong>Smart LED TV (43"–55")</strong>
+                    <p>Living room entertainment & set-top box (~85W)</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-tv">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-tv" checked onchange="toggleAppliance('tv')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-tv">
+                <div class="control-item">
+                  <label>TV Units: <strong id="val-tv-units">1</strong> Screen</label>
+                  <input type="range" id="param-tv-units" min="0" max="4" value="1"
+                    oninput="updateSliderVal('tv-units'); runPrediction();">
+                </div>
+                <div class="control-item">
+                  <label>Daily Watch Time: <strong id="val-tv-hours">4</strong> hrs/day</label>
+                  <input type="range" id="param-tv-hours" min="0" max="18" value="4"
+                    oninput="updateSliderVal('tv-hours'); runPrediction();">
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 10: Washing Machine -->
+            <div class="appliance-input-card" id="card-wm" data-category="kitchen">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">🧺</span>
+                  <div>
+                    <strong>Washing Machine & Laundry</strong>
+                    <p>Motor & spin dry cycle</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-wm">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-wm" checked onchange="toggleAppliance('wm')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-wm">
+                <div class="control-item">
+                  <label>Washing Machine (Loads/wk): <strong id="val-wm-loads">4</strong></label>
+                  <input type="range" id="param-wm-loads" min="0" max="14" value="4"
+                    oninput="updateSliderVal('wm-loads'); runPrediction();">
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 11: Rooftop Solar -->
+            <div class="appliance-input-card highlight-card" id="card-solar" data-category="solar">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">☀️</span>
+                  <div>
+                    <strong>Rooftop Solar PV Net-Metering</strong>
+                    <p>Clean energy generation directly reduces electric bill</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-active" id="badge-solar">Included</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-solar" checked onchange="toggleAppliance('solar')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-solar">
+                <div class="control-item">
+                  <label>Solar Capacity: <strong id="val-solar-kw">1.5</strong> kWp</label>
+                  <input type="range" id="param-solar-kw" min="0" max="10" step="0.5" value="1.5"
+                    oninput="updateSliderVal('solar-kw'); runPrediction();">
+                </div>
+              </div>
+            </div>
+
+            <!-- Appliance 12: Electric Vehicle -->
+            <div class="appliance-input-card" id="card-ev" data-category="solar">
+              <div class="appliance-header-row">
+                <div class="appliance-info">
+                  <span class="appliance-emoji">🚗</span>
+                  <div>
+                    <strong>Electric Vehicle (EV 2W / 4W)</strong>
+                    <p>Home overnight charging (~0.15 kWh per km)</p>
+                  </div>
+                </div>
+                <div class="appliance-toggle-wrap">
+                  <span class="toggle-status-badge status-off" id="badge-ev">Not Owned</span>
+                  <label class="switch-ui">
+                    <input type="checkbox" id="toggle-ev" onchange="toggleAppliance('ev')">
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="appliance-controls" id="controls-ev">
+                <div class="control-item">
+                  <label>Daily Commute: <strong id="val-ev-km">20</strong> km</label>
+                  <input type="range" id="param-ev-km" min="0" max="120" step="5" value="20"
+                    oninput="updateSliderVal('ev-km'); runPrediction();">
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Real-Time AI Prediction Results Card -->
+          <div class="calculator-results">
+            <div class="result-sticky glass-panel">
+              <div class="result-badge-top">
+                <span class="sparkle">✨</span> <span id="predictor-badge-text">Backend ML Prediction Forecast</span>
+              </div>
+
+              <div class="forecast-big-display">
+                <div class="display-label">Estimated Monthly Consumption</div>
+                <div class="display-kwh-wrap">
+                  <span class="display-kwh" id="pred-result-kwh">0</span>
+                  <span class="display-unit">kWh Units</span>
+                </div>
+                <div class="display-bill-wrap">
+                  Estimated Bill:
+                  <strong class="display-bill" id="pred-result-bill">₹0</strong>
+                </div>
+              </div>
+
+              <!-- Tariff Breakdown Table -->
+              <div class="tariff-breakdown">
+                <h4>Tariff Slabs & Fixed Charges</h4>
+                <div class="slab-row">
+                  <span id="slab-1-label">First 100 units @ ₹4.50</span>
+                  <span id="slab-1-amt">₹0</span>
+                </div>
+                <div class="slab-row">
+                  <span id="slab-2-label">101 - 300 units @ ₹7.00</span>
+                  <span id="slab-2-amt">₹0</span>
+                </div>
+                <div class="slab-row">
+                  <span id="slab-3-label">301 - 500 units @ ₹9.50</span>
+                  <span id="slab-3-amt">₹0</span>
+                </div>
+                <div class="slab-row">
+                  <span>Fixed Meter & Grid Charges</span>
+                  <span id="slab-fixed-amt">₹0</span>
+                </div>
+                <div class="slab-row green-row">
+                  <span>Solar Generation Credit</span>
+                  <span id="slab-solar-credit">-₹0</span>
+                </div>
+                <div class="slab-row total-row">
+                  <strong>Total Net Payable</strong>
+                  <strong id="slab-net-total">₹0</strong>
+                </div>
+              </div>
+
+              <!-- Recommendation Optimization Card -->
+              <div class="optimizer-box">
+                <h5>💡 AI Instant Optimization Suggestion</h5>
+                <p id="optimizer-tip">Select your household appliances above to calculate your exact monthly prediction with machine learning.</p>
+              </div>
+
+              <div class="action-buttons-wrap">
+                <button class="btn btn-primary btn-block" onclick="applyPredictionToDashboard()">
+                  <span>Apply & Save to Dashboard</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION 3: APPLIANCE BREAKDOWN ================= -->
+      <section id="section-breakdown" class="content-section">
+        <div class="section-title-wrap">
+          <div>
+            <h2 class="section-title">Appliance-Level Energy Breakdown</h2>
+            <p class="section-desc">Understand which equipment is consuming the most power and discover hidden energy
+              vampires.</p>
+          </div>
+        </div>
+
+        <!-- Section 3 Summary KPIs -->
+        <div class="breakdown-summary-grid">
+          <div class="breakdown-summary-card">
+            <div class="summary-card-icon">⚡</div>
+            <div class="summary-card-info">
+              <strong id="stat-active-appliances">0 Devices</strong>
+              <span id="stat-active-appliances-sub">0 of 12 Monitored</span>
+            </div>
+          </div>
+          <div class="breakdown-summary-card">
+            <div class="summary-card-icon">🔥</div>
+            <div class="summary-card-info">
+              <strong id="stat-top-consumer">--</strong>
+              <span id="stat-top-consumer-share">Highest Energy Consumer</span>
+            </div>
+          </div>
+          <div class="breakdown-summary-card">
+            <div class="summary-card-icon">🚰</div>
+            <div class="summary-card-info">
+              <strong id="stat-pump-slot">Off / Disabled</strong>
+              <span id="stat-pump-advisory">Water Pump Advisory</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="breakdown-grid">
+          <!-- Donut Chart -->
+          <div class="breakdown-chart-card glass-panel">
+            <h3 class="card-title">Load Share by Appliance Category</h3>
+            <div class="donut-wrap">
+              <canvas id="applianceChart"></canvas>
+            </div>
+          </div>
+
+          <!-- List of Appliance Consumptions with Progress Bars -->
+          <div class="breakdown-list-card glass-panel">
+            <h3 class="card-title">Detailed Monthly Consumption by Device</h3>
+
+            <div class="appliance-bars-list" id="appliance-bars-container">
+              <!-- Rendered dynamically by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- What-If Scenario Simulator -->
+        <div class="whatif-box glass-panel">
+          <div class="whatif-header">
+            <h3>🔮 "What-If" Energy Reduction Simulator</h3>
+            <p>See immediate financial impact when upgrading appliances or altering daily habits.</p>
+          </div>
+          <div class="whatif-options">
+            <div class="whatif-item">
+              <input type="checkbox" id="whatif-ac-temp" onchange="runWhatIf()">
+              <label for="whatif-ac-temp">
+                <strong>Run AC at 24°C instead of 18°C</strong>
+                <span>Saves ~18% cooling electricity</span>
+              </label>
+              <div class="whatif-saving" id="save-ac-temp">Save ₹580/mo</div>
+            </div>
+
+            <div class="whatif-item">
+              <input type="checkbox" id="whatif-geyser-timer" onchange="runWhatIf()">
+              <label for="whatif-geyser-timer">
+                <strong>Use Geyser smart timer (30 mins max)</strong>
+                <span>Eliminates idle standby tank heating</span>
+              </label>
+              <div class="whatif-saving" id="save-geyser">Save ₹315/mo</div>
+            </div>
+
+            <div class="whatif-item">
+              <input type="checkbox" id="whatif-led" onchange="runWhatIf()">
+              <label for="whatif-led">
+                <strong>100% BLDC Fans & 9W LED Lights</strong>
+                <span>Replaces 75W induction motors</span>
+              </label>
+              <div class="whatif-saving" id="save-led">Save ₹240/mo</div>
+            </div>
+
+            <div class="whatif-item">
+              <input type="checkbox" id="whatif-solar-add" onchange="runWhatIf()">
+              <label for="whatif-solar-add">
+                <strong>Add +1 kW Rooftop Solar Panels</strong>
+                <span>Generates ~120 clean units every month</span>
+              </label>
+              <div class="whatif-saving" id="save-solar">Save ₹840/mo</div>
+            </div>
+          </div>
+
+          <div class="whatif-total-bar">
+            <span>Potential Monthly Cumulative Savings:</span>
+            <strong class="total-saved-txt" id="whatif-total-savings">₹0 / month</strong>
+          </div>
+        </div>
+      </section>
+
+      <!--SECTION 4: ENERGY SAVER & TIPS  -->
+      <section id="section-tips" class="content-section">
+        <div class="section-title-wrap">
+          <div>
+            <h2 class="section-title">Smart Energy Optimization & Tariff Rules</h2>
+            <p class="section-desc">Actionable, data-backed strategies tailored to Indian DISCOM and international
+              utility standards.</p>
+          </div>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card glass-panel">
+            <div class="tip-icon-wrap cyan">❄️</div>
+            <h3>Air Conditioner Mastery</h3>
+            <p>Every 1°C increase in your AC set-temperature (e.g. from 20°C to 24°C) saves roughly <strong>6% of the
+                compressor's electricity</strong>. Use ceiling fans simultaneously for optimal circulation.</p>
+            <span class="tip-badge">Saves ₹400 – ₹900/mo</span>
+          </div>
+
+          <div class="tip-card glass-panel">
+            <div class="tip-icon-wrap amber">⏰</div>
+            <h3>Time-Of-Day (ToD) Tariff Shifting</h3>
+            <p>Avoid running heavy inductive loads (washing machines, geysers, EV charging) during peak grid stress
+              between <strong>6:00 PM and 10:00 PM</strong> when peak surcharges apply.</p>
+            <span class="tip-badge">Saves ₹250 – ₹600/mo</span>
+          </div>
+
+          <div class="tip-card glass-panel">
+            <div class="tip-icon-wrap emerald">☀️</div>
+            <h3>Net Metering & Solar Rooftop</h3>
+            <p>A 2 kW solar rooftop setup generates 8–10 units daily, cutting typical 2-3 BHK bills by up to
+              <strong>70%</strong>. Surplus energy can be sold back to the grid via net metering.
+            </p>
+            <span class="tip-badge">Saves ₹1,800 – ₹3,000/mo</span>
+          </div>
+
+          <div class="tip-card glass-panel">
+            <div class="tip-icon-wrap green">🔌</div>
+            <h3>Eliminate Phantom / Standby Loads</h3>
+            <p>TVs, microwaves, set-top boxes, and laptop chargers consume 5W–15W continuously when left plugged in.
+              Smart surge strips eliminate this invisible drain.</p>
+            <span class="tip-badge">Saves ₹120 – ₹250/mo</span>
+          </div>
+
+          <div class="tip-card glass-panel">
+            <div class="tip-icon-wrap cyan">🌀</div>
+            <h3>Switch to BLDC Inverter Fans</h3>
+            <p>Standard induction fans consume 75W, while Brushless DC (BLDC) motor fans consume only 28W–32W with
+              silent operation and multi-speed remotes.</p>
+            <span class="tip-badge">Saves ₹300 – ₹500/mo</span>
+          </div>
+
+          <div class="tip-card glass-panel">
+            <div class="tip-icon-wrap amber">🧼</div>
+            <h3>Washing Machine Cold Wash</h3>
+            <p>90% of a washing machine's power goes towards heating water. Using cold wash cycles (30°C or normal tap
+              temperature) drastically reduces cycle consumption.</p>
+            <span class="tip-badge">Saves ₹150 – ₹350/mo</span>
+          </div>
+        </div>
+
+        <!-- Bill Analysis Breakdown Reference -->
+        <div class="tariff-guide glass-panel">
+          <div class="guide-header">
+            <h3>DISCOM Slab Tariff Rate Card (Reference)</h3>
+            <span class="badge-pill">Effective FY 2024–2026</span>
+          </div>
+          <div class="table-responsive">
+            <table class="tariff-table">
+              <thead>
+                <tr>
+                  <th>Consumption Slab</th>
+                  <th>Rate per Unit (₹)</th>
+                  <th>Rate per Unit ($)</th>
+                  <th>Recommended User Strategy</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>0 – 100 kWh</strong> (Subsidy Slab)</td>
+                  <td>₹4.50</td>
+                  <td>$0.054</td>
+                  <td>Keep baseline below 100 units to maintain lifeline tariffs.</td>
+                </tr>
+                <tr>
+                  <td><strong>101 – 300 kWh</strong> (Normal Domestic)</td>
+                  <td>₹7.00</td>
+                  <td>$0.084</td>
+                  <td>Standard tier for 2-BHK homes without intensive AC usage.</td>
+                </tr>
+                <tr>
+                  <td><strong>301 – 500 kWh</strong> (High Consumption)</td>
+                  <td>₹9.50</td>
+                  <td>$0.114</td>
+                  <td>High slab. Ideal threshold to consider rooftop solar installation.</td>
+                </tr>
+                <tr>
+                  <td><strong>500+ kWh</strong> (Commercial / Premium)</td>
+                  <td>₹11.50</td>
+                  <td>$0.138</td>
+                  <td>Highest tier with maximum fuel adjustment charges.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <span>VoltVision AI &copy; 2026. Smart Grid & Electricity Forecasting Engine.</span>
+        <div class="footer-links">
+          <a href="#"
+            onclick="demoAlert('Privacy Policy: Predictions are processed securely via VoltVision AI Backend ML Engine.')">Privacy
+            Policy</a>
+          <a href="#" onclick="demoAlert('DISCOM Connect API Version: 2.4-Active')">API Status</a>
+          <a href="#"
+            onclick="demoAlert('Documentation: ML model trained on 500,000+ hourly consumption smart meter logs.')">ML
+            Docs</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="app.js?v=20261029-live-ml"></script>
+</body>
+
+</html>
